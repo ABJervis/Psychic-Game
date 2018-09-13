@@ -1,62 +1,47 @@
+//create computer guess choices
+var computerChoices = 'abcdefghijklmnopqrstuvwxyz'.split("");
+
 //variables to count wins, losses, etc.
 var wins = 0
 var losses = 0
 var guessSoFar = []
-var guessesLeft = 9
-var computerChoices = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
+var guessesNumber = 10
+
+//variables to hold references to places in the HTML
+
+var winsText = document.getElementById("wins-text");
+var lossesText = document.getElementById("loss-text");
+var guessSoFarText = document.getElementById("guessSoFar");
+var guessesNumberText = document.getElementById("guessesLeft");
+
 
 // Randomly chooses a choice from the options array = Computer's guess. This has to done before user begins to guess.
 var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
 console.log(computerGuess);
 
+
 // This function is run whenever the user presses a key.
 document.onkeyup = function(event) {
 
-// Determines which key was pressed.
-var userGuess = event.key;
+    // Determines which key was pressed.
+    var userGuess = event.key;
+    console.log(event)
 
- 
-//correct guesses
+//if user guesses correctly
 
-if (userGuess === computerChoices){
+if(userGuess === computerGuess){
     wins++;
-    guessSoFar = 9;
-    guessesLeft = [];
-
-    }
-//incorrect guesses
-
-if (userGuess !== computerChoices){
-    guessesLeft--;
+    alert("Congratulations!")
 }
 
-if (guessesLeft == 0) {
-    losses++;
-    guessesLeft = 9;
-    guessSoFar = []
+//if user guess incorrectly
+
+if(userGuess !== computerGuess){
+    guessesNumber --;
+    alert("Try again!");
+
 }
- 
-     //variables to tie into the html
-    
-  var winsText = document.getElementById("wins-text");
-  var lossesText = document.getElementById("loss-text");
-  var guessesMade = document.getElementById("guessSoFar");
-  var numberLeft = document.getElementById("guessesLeft");
-
-  if (guessSoFar > 0){
-    numberLeft.push(userGuess);
-    console.log(userGuess);
-
-    winsText.textContent = "Wins: " + wins;
-    lossesText.textContent = "Losses: " + losses;
-    guessesMade.textContent = "Guesses so Far: " + userGuess;
-    numberLeft.textContent = "Guesses Left" - guessesLeft;
-    
-    }
-  
 
 
 
 }
-    
-    
