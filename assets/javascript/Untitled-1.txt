@@ -1,0 +1,36 @@
+//variables to tie into the html
+    
+  var winsText = document.getElementById("wins-text");
+  var lossesText = document.getElementById("loss-text");
+  var guessesMade = document.getElementById("guessSoFar");
+  var numberLeft = document.getElementById("guessesLeft");
+
+  if (guessSoFar > 0){
+    numberLeft.push(userGuess);
+    console.log(userGuess);
+
+    winsText.textContent = "Wins: " + wins;
+    lossesText.textContent = "Losses: " + losses;
+    guessesMade.textContent = "Guesses so Far: " + userGuess;
+    numberLeft.textContent = "Guesses Left" - guessesLeft;
+    
+
+    //user guess incorrect
+
+if (userGuess !== computerGuess){
+    guessesNumber --;
+    guessSoFar.text;
+}
+
+if (guessesNumber < 1){
+    losses ++;
+}
+
+if (userGuess === computerChoices){
+    wins++;
+    guessSoFar = [];
+    guessesLeft = i;
+
+    }
+
+}
