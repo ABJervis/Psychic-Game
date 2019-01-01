@@ -1,58 +1,77 @@
-//create computer guess choices
-var computerChoices = 'abcdefghijklmnopqrstuvwxyz'.split("");
+var letters = ["a", "b", "c", "d", "e"];
 
-//define variables
+// need an empty array to hold the guessed letters, this will be posted back to the page for user reference
+var guessedLetters = [];
+
+//need a countdown to allow for only 10 guesses, start at 9
+var guessesLeft = 9;
+
+//cretate counter for wins/losses
 var wins = 0;
 var losses = 0;
-var guessSoFar = [];
-var guessesNumber = 9;
 
-var winsText = document.getElementById("wins-text");
-var lossesText = document.getElementById("loss-text");
-var guessesMade = document.getElementById("guessSoFar");
-var numberLeft = document.getElementById("guessesLeft");
+//define functions that will be used to run the game: get random letter, update # of guesses left and guesses so far
 
-var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
-console.log(computerGuess);
-//define functions that will be used to run the game
+//grab the HTML element and set it equal to the guesses left
+var updateGuessesLeft = function() {
+    document.querySelector("#guesses-left").innerHTML = guessesLeft;
+};
 
-//need to set reset so the game can be re-played
+//create the random letter to guess based on generator using the letter array from above, only letters a to e)
+var updateLetterToGuess = function() {
+    letterToGuess = letters[Math.floor(Math.random()* letters.length)];
+};
+
+//keep track of letters guessed and display for user reference
+var updateGuessesSoFar = function() {
+    document.querySelector("#guess-so-far").innerHTML = guessedLetters.join(", ");
+};
+
+
+//create function set reset so the game can be re-played, set everything back to the beginning, guesses left counter starts over...etc.
+
+var reset = function(){
+    guessesLeft = 9;
+    guessedLetters = [];
+    updateLetterToGuess();
+    updateGuessesLeft();
+    updateGuessesSoFar();
+};
+
+//call to run on page load.
+
+updateLetterToGuess();
+updateGuessesLeft();
 
 // This function is run whenever the user presses a key.
-document.onkeyup = function(event) {
+document.onkeydown = function(event) {
+    //reduce guesses left by one
+    guessesLeft--;
+    //place to lowercase 
+    var letter = String.fromCharCode(event.which).toLowerCase();
 
-    // Determines which key was pressed.
-    var userGuess = event.key;
-    console.log(event)
+    //add guessed letter to the guessedLetters array
+    guessedLetters.push(letter);
 
-//if user guesses correctly - alert is more for me than a part of the game
+    //then run the update functions
+    updateGuessesLeft();
+    updateGuessesSoFar();
 
-if(userGuess === computerGuess){
-    wins++;
-    alert("Congratulations!") 
-}
+    // compare letter selected to random letter chosen.
+    if (letter === letterToGuess) {
+        wins++;
+        document.querySelector("#wins").innerHTML = wins;
 
-//if user guess incorrectly - alert is more for me than a part of the game
+        //reset the game
+        reset();
+    }
 
+    if (guessesLeft === 0){
+        //update losses to reflect loss
+        losses++;
+        document.querySelector("#losses").innerHTML = losses;
 
-if(userGuess !== computerGuess){
-    guessesNumber --;
-    
-    alert("Try again!");
-}
-
-
-if(guessesNumber < 1){
-    alert("Game Over")
-}
-
-winsText.textContent = "Wins: " + wins;
-lossesText.textContent = "Losses: " + losses;
-guessesMade.textContent = "Guesses so Far: " + userGuess;
-numberLeft.textContent = "Guesses Left" - guessesLeft;
-
-
-}
-
-//need to learn how to display results to the page. cannot figure out how to get them to show, 
-//there's return and push and textcontent, not sure how to go 
+        //call the reset
+        reset();
+    }
+};
