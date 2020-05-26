@@ -1,4 +1,4 @@
-var letters = ["a", "b", "c", "d", "e"];
+var letters = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","x","y","z"];
 
 // need an empty array to hold the guessed letters, this will be posted back to the page for user reference
 var guessedLetters = [];
@@ -6,7 +6,7 @@ var guessedLetters = [];
 //need a countdown to allow for only 10 guesses, start at 9
 var guessesLeft = 9;
 
-//cretate counter for wins/losses
+//create counter for wins/losses
 var wins = 0;
 var losses = 0;
 
